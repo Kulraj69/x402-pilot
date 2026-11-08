@@ -1,0 +1,60 @@
+buyer agent address: 0x80DB831Ae18A81d1A68B5391aEEE0a4d05664AC6
+1) free route (no payment):
+    200 {"service":"qualiabits-x402-pilot","network":"eip155:84532 (Base Sepolia testnet)","paidEndpoints":[{"path":"/api/premium/base-stats","price":"$0.01 USDC"}],"note":"Testnet deployment. No real money moves here."}
+2) premium route WITHOUT payment (expect 402):
+    402 {"x402Version":1,"error":"X-PAYMENT header is required","accepts":[{"scheme":"exact","network":"base-sepolia","maxAmountRequired":"10000","resource":"http://localhost:4021/api/premium/base-stats","description":"Live Base network stats, sold per-call over x402","mimeType":"","payTo":"0x8593A282E91887
+3) premium route WITH x402 payment:
+   status: 200
+   body: {"paidFor":true,"settledVia":"x402","data":{"latestBlock":56266623,"gasPriceGwei":0.006,"chain":"base-sepolia","fetchedAt":"2026-11-08T21:59:53.579Z"}}
+   settlement: {
+  "success": true,
+  "transaction": "0x27432e248ab8a711081587f85ba4afbdec0b465197a921afdf1663fd6c3fec77",
+  "network": "base-sepolia",
+  "payer": "0x80DB831Ae18A81d1A68B5391aEEE0a4d05664AC6"
+}
+   explorer: https://sepolia.basescan.org/tx/0x27432e248ab8a711081587f85ba4afbdec0b465197a921afdf1663fd6c3fec77
+
+=== 2026-11-09 probe 2: PayAI facilitator (FACILITATOR_URL=https://facilitator.payai.network) ===
+buyer agent address: 0x80DB831Ae18A81d1A68B5391aEEE0a4d05664AC6
+1) free route (no payment):
+    200 {"service":"qualiabits-x402-pilot","network":"eip155:84532 (Base Sepolia testnet)","paidEndpoints":[{"path":"/api/premium/base-stats","price":"$0.01 USDC"}],"note":"Testnet deployment. No real money moves here."}
+2) premium route WITHOUT payment (expect 402):
+    402 {"x402Version":1,"error":"X-PAYMENT header is required","accepts":[{"scheme":"exact","network":"base-sepolia","maxAmountRequired":"10000","resource":"http://localhost:4021/api/premium/base-stats","description":"Live Base network stats, sold per-call over x402","mimeType":"","payTo":"0x8593A282E91887
+3) premium route WITH x402 payment:
+   status: 200
+   body: {"paidFor":true,"settledVia":"x402","data":{"latestBlock":56269254,"gasPriceGwei":0.006,"chain":"base-sepolia","fetchedAt":"2026-11-08T22:08:39.770Z"}}
+   settlement: {
+  "success": true,
+  "transaction": "0x085183bc21daae4bb06a05a79fb87c9a4a5e20704950669f0fa4bd4db883436a",
+  "network": "base-sepolia",
+  "payer": "0x80db831ae18a81d1a68b5391aeee0a4d05664ac6"
+}
+   explorer: https://sepolia.basescan.org/tx/0x085183bc21daae4bb06a05a79fb87c9a4a5e20704950669f0fa4bd4db883436a
+
+RPC receipt: status 0x1, block 56269257; Blockscout: USDC 10000 units -> payee 0x8593A282E91887032e0B9d4946780CE0073d802c (independently confirmed)
+
+=== 2026-11-09 probe 3: OpenFacilitator (FACILITATOR_URL=https://pay.openfacilitator.io) ===
+    200 {"service":"qualiabits-x402-pilot","network":"eip155:84532 (Base Sepolia testnet)","paidEndpoints":[{"path":"/api/premium/base-stats","price":"$0.01 USDC"}],"note":"Testnet deployment. No real money moves here."}
+2) premium route WITHOUT payment (expect 402):
+    402 {"x402Version":1,"error":"X-PAYMENT header is required","accepts":[{"scheme":"exact","network":"base-sepolia","maxAmountRequired":"10000","resource":"http://localhost:4021/api/premium/base-stats","description":"Live Base network stats, sold per-call over x402","mimeType":"","payTo":"0x8593A282E91887
+3) premium route WITH x402 payment:
+   status: 402
+   body: {"x402Version":1,"error":"Facilitator has insufficient ETH for gas","accepts":[{"scheme":"exact","network":"base-sepolia","maxAmountRequired":"10000","resource":"http://localhost:4021/api/premium/base-stats","description":"Live Base network stats, sold per-call over x402","mimeType":"","payTo":"0x8593A282E91887032e0B9d4946780CE0073d802c","maxTimeoutSeconds":60,"asset":"0x036CbD53842c5426634e7929541eC2318f3dCF7e","outputSchema":{"input":{"type":"http","method":"GET","discoverable":true}},"extra":{"name":"USDC","version":"2"}}]}
+
+=== 2026-11-09 probe 4: Dexter (FACILITATOR_URL=https://x402.dexter.cash; note: facilitator.dexter.cash 308-redirects here) ===
+    402 {"x402Version":1,"error":"X-PAYMENT header is required","accepts":[{"scheme":"exact","network":"base-sepolia","maxAmountRequired":"10000","resource":"http://localhost:4021/api/premium/base-stats","description":"Live Base network stats, sold per-call over x402","mimeType":"","payTo":"0x8593A282E91887
+3) premium route WITH x402 payment:
+   status: 402
+   body: {"x402Version":1,"error":"Failed to verify payment: Current settlement pricing is unavailable; retry shortly.","accepts":[{"scheme":"exact","network":"base-sepolia","maxAmountRequired":"10000","resource":"http://localhost:4021/api/premium/base-stats","description":"Live Base network stats, sold per-call over x402","mimeType":"","payTo":"0x8593A282E91887032e0B9d4946780CE0073d802c","maxTimeoutSeconds":60,"asset":"0x036CbD53842c5426634e7929541eC2318f3dCF7e","outputSchema":{"input":{"type":"http","method":"GET","discoverable":true}},"extra":{"name":"USDC","version":"2"}}]}
+
+=== retries 22:12 UTC (attempt 2 for each failed facilitator, identical client/server/payload that succeeds on x402.org + PayAI) ===
+=== retry https://pay.openfacilitator.io 22:12:09 ===
+    402 {"x402Version":1,"error":"X-PAYMENT header is required","accepts":[{"scheme":"exact","network":"base-sepolia","maxAmountRequired":"10000","resource":"http://localhost:4021/api/premium/base-stats","description":"Live Base network stats, sold per-call over x402","mimeType":"","payTo":"0x8593A282E91887
+   status: 402
+   body: {"x402Version":1,"error":"Facilitator has insufficient ETH for gas","accepts":[{"scheme":"exact","network":"base-sepolia","maxAmountRequired":"10000","resource":"http://localhost:4021/api/premium/base-stats","description":"Live Base network stats, sold per-call over x402","mimeType":"","payTo":"0x8593A282E91887032e0B9d4946780CE0073d802c","maxTimeoutSeconds":60,"asset":"0x036CbD53842c5426634e7929541eC2318f3dCF7e","outputSchema":{"input":{"type":"http","method":"GET","discoverable":true}},"extra":{"name":"USDC","version":"2"}}]}
+=== retry https://x402.dexter.cash 22:12:14 ===
+    402 {"x402Version":1,"error":"X-PAYMENT header is required","accepts":[{"scheme":"exact","network":"base-sepolia","maxAmountRequired":"10000","resource":"http://localhost:4021/api/premium/base-stats","description":"Live Base network stats, sold per-call over x402","mimeType":"","payTo":"0x8593A282E91887
+   status: 402
+   body: {"x402Version":1,"error":"Failed to verify payment: Current settlement pricing is unavailable; retry shortly.","accepts":[{"scheme":"exact","network":"base-sepolia","maxAmountRequired":"10000","resource":"http://localhost:4021/api/premium/base-stats","description":"Live Base network stats, sold per-call over x402","mimeType":"","payTo":"0x8593A282E91887032e0B9d4946780CE0073d802c","maxTimeoutSeconds":60,"asset":"0x036CbD53842c5426634e7929541eC2318f3dCF7e","outputSchema":{"input":{"type":"http","method":"GET","discoverable":true}},"extra":{"name":"USDC","version":"2"}}]}
+
+LABEL: directional engineering observations, n=1 API, network base-sepolia, x402 v1 exact scheme, $0.01 USDC, one call type. Facilitator-side errors, persistent across 2 attempts ~2-3 min apart. Not a benchmark.
